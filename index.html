@@ -3,556 +3,501 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GTO Labs — Golgotha to Olympia</title>
-<meta name="description" content="GTO Labs: forward-deployed AI engineers placed inside your business, a hardware supply desk, and the Lab. Every arm stands alone.">
-<meta property="og:title" content="GTO Labs — Golgotha to Olympia">
-<meta property="og:description" content="Forward-deployed AI engineers. Hardware supply desk. The Lab.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://gto.okinent.org">
-<meta name="theme-color" content="#0a0c08">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0c08'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-size='19' fill='%23c9a84c' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
+<title>GTO Labs — AI that works where your data lives</title>
+<meta name="description" content="On-premise AI, forward-deployed engineers and a private compute factory — built in Windhoek for organisations whose records can't leave the country.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ==========================================================================
-     GTO LABS — leaf site.
-     Scroll language: LEAF ("A Story You Scroll"), shared tokens with the hub.
-     Rules: single gold accent, serif voice, mono for labels only, 46rem measure,
-     content arrives as you travel, mobile-first, nothing that reads as AI-made.
-     ========================================================================== */
-  :root {
-    --bg:        #0a0c08;
-    --bg-2:      #0e110d;
-    --ink:       #e8e4d8;
-    --ink-dim:   #a8a695;
-    --gold:      #c9a84c;
-    --gold-lift: #e0c069;
-    --gold-deep: #7d6832;
-    --dim:       #6b6f5e;
-    --hair:      rgba(232,228,216,0.09);
-    --hair-lift: rgba(201,168,76,0.28);
-    --measure:   46rem;
-    --ease:      cubic-bezier(.19,.86,.36,1);
-    --serif:     Georgia, "Iowan Old Style", "Times New Roman", Times, serif;
-    --mono:      ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  }
+:root{
+  --bg:#0a0c08; --bg-2:#11140e; --bg-3:#161a12;
+  --ink:#ece5d3; --dim:#9aa08c; --faint:#6b7160;
+  --gold:#d4af37; --ember:#e8862d; --ember-soft:rgba(232,134,45,.14);
+  --line:rgba(236,229,211,.10); --line-2:rgba(236,229,211,.18);
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--ember);color:#0a0c08}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-  body {
-    background: var(--bg); color: var(--ink); font-family: var(--serif);
-    font-size: 17px; line-height: 1.72; overflow-x: hidden;
-    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-  }
+/* ---------- rail ---------- */
+#rail{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:14px}
+#rail a{width:7px;height:7px;border-radius:50%;background:rgba(236,229,211,.18);transition:.3s}
+#rail a.on{background:var(--ember);box-shadow:0 0 10px rgba(232,134,45,.6);transform:scale(1.35)}
+#rail a:hover{background:var(--gold)}
+@media(max-width:760px){#rail{display:none}}
+@media(max-width:760px){section{padding:76px 0}}
 
-  /* atmosphere: vignette + faint grain, zero image assets */
-  body::before {
-    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(120% 80% at 50% -10%, rgba(201,168,76,0.07), transparent 60%),
-      radial-gradient(90% 60% at 100% 100%, rgba(201,168,76,0.035), transparent 65%);
-  }
-  body::after {
-    content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .5;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
-  }
-  .wrap { position: relative; z-index: 2; max-width: var(--measure); margin: 0 auto; padding: 0 24px; }
-  .wide { position: relative; z-index: 2; max-width: 60rem; margin: 0 auto; padding: 0 24px; }
+/* ---------- top bar ---------- */
+.top{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:16px 28px;background:linear-gradient(180deg,rgba(10,12,8,.92),rgba(10,12,8,0));backdrop-filter:blur(6px)}
+.top .brand{font-family:var(--serif);font-weight:700;font-size:1.15rem;letter-spacing:.06em;color:var(--ink);text-decoration:none}
+.top .brand em{color:var(--gold);font-style:normal}
+.top nav{display:flex;gap:22px;align-items:center}
+.top nav a{color:var(--dim);text-decoration:none;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.top nav a:hover{color:var(--ink)}
+.top nav a.cta{color:var(--ember);border:1px solid rgba(232,134,45,.4);border-radius:999px;padding:7px 14px}
+.top nav a.cta:hover{background:var(--ember-soft);color:var(--ember)}
+@media(max-width:760px){.top nav a:not(.cta){display:none}}
 
-  #rail { position: fixed; left: 0; top: 0; bottom: 0; width: 2px; background: var(--hair); z-index: 70; }
-  #rail span { display: block; width: 100%; height: 0; background: linear-gradient(var(--gold), var(--gold-deep)); }
-  .rail-mark {
-    position: fixed; left: 16px; top: 50%; transform: translateY(-50%); z-index: 70;
-    font-family: var(--mono); font-size: .58rem; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--dim); writing-mode: vertical-rl;
-  }
+/* ---------- layout ---------- */
+section{padding:110px 0;position:relative}
+.wrap{max-width:1060px;margin:0 auto;padding:0 26px}
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.kicker b{color:var(--faint);font-weight:400}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12}
+h2{font-size:clamp(1.9rem,4.2vw,3rem);margin-bottom:20px}
+h2 em{font-style:italic;color:var(--gold)}
+.lede{color:var(--dim);font-size:1.12rem;max-width:640px;margin-bottom:40px}
+.lede strong{color:var(--ink);font-weight:600}
 
-  header.mast {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
-    display: flex; align-items: center; justify-content: space-between; padding: 14px 24px;
-    font-family: var(--mono); font-size: .64rem; letter-spacing: .2em; text-transform: uppercase;
-    background: linear-gradient(to bottom, rgba(10,12,8,.94) 40%, rgba(10,12,8,0));
-    transition: opacity .45s var(--ease);
-  }
-  header.mast .mark { color: var(--ink); text-decoration: none; letter-spacing: .26em; }
-  header.mast nav { display: flex; gap: 18px; }
-  header.mast nav a { color: var(--dim); text-decoration: none; transition: color .25s var(--ease); }
-  header.mast nav a:hover { color: var(--gold); }
-  @media (max-width: 560px) { header.mast nav a.opt { display: none; } }
+/* ---------- reveal engine ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
 
-  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
-  .reveal.in { opacity: 1; transform: none; }
-  .reveal.d1 { transition-delay: .09s; } .reveal.d2 { transition-delay: .18s; } .reveal.d3 { transition-delay: .27s; }
-  .stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .85s var(--ease), transform .85s var(--ease); }
-  .stagger.in > * { opacity: 1; transform: none; }
-  .stagger.in > *:nth-child(1) { transition-delay: .04s; } .stagger.in > *:nth-child(2) { transition-delay: .13s; }
-  .stagger.in > *:nth-child(3) { transition-delay: .22s; } .stagger.in > *:nth-child(4) { transition-delay: .31s; }
+/* ---------- hero ---------- */
+#hero{min-height:100svh;display:flex;align-items:center;padding-top:120px;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(60% 50% at 70% 30%,rgba(232,134,45,.10),transparent 65%),
+  radial-gradient(50% 45% at 20% 75%,rgba(212,175,55,.07),transparent 60%);
+  animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-3%,2%) scale(1.06)}}
+#hero .wrap{position:relative;z-index:2}
+.hero-rule{width:64px;height:2px;background:var(--ember);margin:26px 0}
+#hero h1{font-size:clamp(2.6rem,7vw,5.2rem);letter-spacing:-.01em}
+#hero h1 em{font-style:italic;color:var(--gold)}
+#hero .lede{font-size:1.2rem;max-width:560px}
+.cta-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:38px}
+.btn{display:inline-block;padding:14px 28px;border-radius:999px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:600;transition:.25s}
+.btn.ember{background:var(--ember);color:#0a0c08}
+.btn.ember:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(232,134,45,.35)}
+.btn.ghost{border:1px solid var(--line-2);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.scroll-cue{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);color:var(--faint);font-family:var(--mono);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+.hero-meta{display:flex;gap:34px;margin-top:52px;flex-wrap:wrap}
+.hero-meta div{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
+.hero-meta b{display:block;font-family:var(--serif);font-size:1.5rem;color:var(--gold);letter-spacing:0;text-transform:none}
 
-  .hero { min-height: 100svh; display: flex; align-items: center; padding: 96px 0 72px; }
-  .hero-inner { will-change: transform, opacity; }
-  .kicker {
-    font-family: var(--mono); font-size: .62rem; letter-spacing: .3em; text-transform: uppercase;
-    color: var(--gold); display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
-  }
-  .kicker::before { content: ""; width: 34px; height: 1px; background: var(--gold-deep); }
-  h1 { font-size: clamp(2.7rem, 12vw, 5.6rem); font-weight: 400; line-height: .98; letter-spacing: -.028em; margin-bottom: 30px; }
-  h1 .line2 { display: block; }
-  h1 em { font-style: italic; color: var(--gold); }
-  .hero .lede { font-size: clamp(1.05rem, 3.9vw, 1.3rem); line-height: 1.6; color: var(--ink); max-width: 33rem; }
-  .hero .lede b { color: #fff; font-weight: 400; border-bottom: 1px solid var(--hair-lift); }
-  .cue {
-    margin-top: clamp(46px, 9vh, 84px); display: flex; align-items: center; gap: 12px;
-    font-family: var(--mono); font-size: .58rem; letter-spacing: .24em; text-transform: uppercase; color: var(--dim);
-  }
-  .cue i { display: block; width: 40px; height: 1px; background: var(--gold-deep); animation: cue 2.8s var(--ease) infinite; }
-  @keyframes cue { 0%,100% { transform: scaleX(.3); opacity: .45; } 50% { transform: scaleX(1); opacity: 1; } }
+/* ---------- cards ---------- */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:860px){.grid3,.grid2{grid-template-columns:1fr}}
+.card{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:30px 26px;transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .35s,box-shadow .35s}
+.card:hover{transform:translateY(-6px);border-color:rgba(232,134,45,.45);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.card .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ember);margin-bottom:14px}
+.card h3{font-size:1.45rem;margin-bottom:12px}
+.card p{color:var(--dim);font-size:.95rem}
+.card p strong{color:var(--ink)}
+.card .who{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--gold);margin-top:16px}
 
-  section { padding: clamp(72px, 13vh, 128px) 0; position: relative; }
-  section + section { border-top: 1px solid var(--hair); }
-  .sec-head { margin-bottom: 30px; }
-  .num { display: block; font-family: var(--mono); font-size: .6rem; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 14px; }
-  h2 { font-size: clamp(1.62rem, 5.6vw, 2.5rem); font-weight: 400; line-height: 1.13; letter-spacing: -.015em; margin-bottom: 18px; }
-  h2 em { font-style: italic; color: var(--gold); }
-  h3 { font-size: 1.08rem; font-weight: 400; letter-spacing: .01em; margin-bottom: 8px; color: var(--ink); }
-  p { color: var(--ink); }
-  p + p { margin-top: 15px; }
-  .muted { color: var(--dim); }
-  .accent { color: var(--gold); }
-  strong { font-weight: 400; color: #fff; }
-  a.inline { color: var(--gold); text-decoration: none; border-bottom: 1px dotted var(--gold-deep); }
-  a.inline:hover { border-bottom-style: solid; border-bottom-color: var(--gold); }
+/* ---------- assessment ---------- */
+#assess .panel{background:linear-gradient(160deg,var(--bg-2),var(--bg-3));border:1px solid var(--line-2);border-radius:22px;padding:52px 48px;position:relative;overflow:hidden}
+#assess .panel::after{content:'';position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(232,134,45,.16),transparent 70%)}
+.price-line{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:18px 0 8px}
+.price-line .big{font-family:var(--serif);font-size:clamp(2.6rem,6vw,4rem);color:var(--gold);font-weight:700}
+.price-line .once{font-family:var(--mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.gets{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0}
+@media(max-width:860px){.gets{grid-template-columns:1fr}}
+.gets div{border:1px solid var(--line);border-radius:12px;padding:18px;font-size:.9rem;color:var(--dim)}
+.gets b{display:block;color:var(--ink);font-family:var(--serif);font-size:1.15rem;margin-bottom:6px}
+.mechanic{border-left:3px solid var(--ember);background:var(--ember-soft);border-radius:0 14px 14px 0;padding:22px 26px;margin:26px 0 34px;font-size:1.02rem}
+.mechanic strong{color:var(--ember)}
+.mechanic p{color:var(--ink)}
+.mechanic .alt{color:var(--dim);font-size:.92rem;margin-top:8px}
 
-  .distance { margin: 34px 0 30px; padding: 26px 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
-  .places { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center; }
-  .place { font-size: 1.06rem; letter-spacing: .02em; }
-  .place span { display: block; font-family: var(--mono); font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-top: 7px; }
-  .place:last-child { text-align: right; }
-  .arrow { color: var(--gold); font-size: 1rem; }
-  @media (max-width: 520px) {
-    .places { grid-template-columns: 1fr; gap: 10px; }
-    .place:last-child, .place { text-align: left; }
-    .arrow { transform: rotate(90deg); width: min-content; }
-  }
+/* ---------- steps ---------- */
+.steps{counter-reset:step}
+.step{display:grid;grid-template-columns:80px 1fr;gap:26px;padding:26px 0;border-bottom:1px solid var(--line);align-items:start}
+.step:last-child{border-bottom:none}
+.step .n{font-family:var(--serif);font-size:2.6rem;color:rgba(212,175,55,.35);font-weight:700;line-height:1}
+.step:hover .n{color:var(--gold)}
+.step h3{font-size:1.35rem;margin-bottom:6px}
+.step p{color:var(--dim);max-width:560px}
+.step p strong{color:var(--ink)}
 
-  blockquote {
-    position: relative; margin: 8px 0 26px; padding: 4px 0 4px 26px;
-    border-left: 1px solid var(--gold-deep);
-    font-size: clamp(1.22rem, 4.4vw, 1.62rem); line-height: 1.45; font-style: italic; color: var(--ink);
-  }
-  blockquote::before {
-    content: "\201C"; position: absolute; left: -4px; top: -30px;
-    font-size: 3.4rem; color: var(--gold-deep); opacity: .5; font-style: normal;
-  }
-  @media (max-width: 520px) { blockquote::before { display: none; } }
+/* ---------- costs ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:26px 20px;text-align:center;transition:.3s}
+.stat:hover{border-color:rgba(212,175,55,.5)}
+.stat b{display:block;font-family:var(--serif);font-size:clamp(1.5rem,3.4vw,2.2rem);color:var(--gold);font-weight:700;line-height:1.1}
+.stat b small{font-size:.55em;color:var(--dim);font-weight:500}
+.stat span{display:block;margin-top:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.cost-note{margin-top:26px;color:var(--dim);font-size:.95rem;border-top:1px solid var(--line);padding-top:20px}
+.cost-note strong{color:var(--ink)}
 
-  .arms { display: grid; gap: 1px; background: var(--hair); border: 1px solid var(--hair); margin-top: 34px; }
-  .arm { position: relative; background: var(--bg); padding: 30px 26px 30px 30px; transition: background .35s var(--ease); }
-  .arm:hover { background: var(--bg-2); }
-  .arm::before {
-    content: attr(data-i); position: absolute; right: 18px; top: 12px;
-    font-family: var(--mono); font-size: 2.1rem; color: var(--ink); opacity: .05; letter-spacing: -.02em;
-  }
-  .arm .tag { font-family: var(--mono); font-size: .56rem; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-deep); }
-  .arm p { color: var(--ink-dim); font-size: .98rem; margin-top: 10px; }
-  .arm.lead { background: var(--bg-2); }
-  .arm.lead::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--gold); }
-  .arm.lead p { color: var(--ink); }
-  @media (min-width: 720px) { .arms { grid-template-columns: 1fr 1fr; } .arm.lead { grid-column: 1 / -1; } }
+/* ---------- token factory ---------- */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+.photo{border-radius:18px;overflow:hidden;border:1px solid var(--line-2);position:relative}
+.photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 6s ease}
+.photo:hover img{transform:scale(1.05)}
+.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:14px 18px;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(236,229,211,.75);background:linear-gradient(transparent,rgba(10,12,8,.85))}
+.tf-points{list-style:none;margin-top:26px}
+.tf-points li{padding:14px 0;border-bottom:1px solid var(--line);color:var(--dim);font-size:.96rem;display:flex;gap:14px}
+.tf-points li:last-child{border-bottom:none}
+.tf-points li::before{content:'◆';color:var(--ember);font-size:.7rem;margin-top:5px}
+.tf-points b{color:var(--ink)}
 
-  .loop { margin-top: 34px; position: relative; padding-left: 30px; }
-  .loop::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--hair); }
-  .step { position: relative; padding: 0 0 26px; }
-  .step:last-child { padding-bottom: 0; }
-  .step::before {
-    content: ""; position: absolute; left: -29px; top: 9px; width: 11px; height: 11px;
-    border: 1px solid var(--gold-deep); background: var(--bg); transform: rotate(45deg);
-    transition: background .4s var(--ease), border-color .4s var(--ease);
-  }
-  .step.passed::before { background: var(--gold); border-color: var(--gold); }
-  .step b { font-family: var(--mono); font-size: .66rem; letter-spacing: .16em; color: var(--gold); display: block; margin-bottom: 4px; }
-  .step p { color: var(--ink-dim); font-size: .97rem; }
-  .step strong { color: var(--ink); }
+/* ---------- proof / BTJ wall ---------- */
+.award{display:flex;gap:26px;align-items:flex-start;margin-bottom:44px;flex-wrap:wrap}
+.laurel{font-family:var(--serif);font-size:3.4rem;color:var(--gold);line-height:1}
+.award h3{font-size:1.5rem;margin-bottom:8px}
+.award p{color:var(--dim);max-width:560px}
+.award p strong{color:var(--ink)}
+.shirt-wall{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:30px 0 18px}
+@media(max-width:860px){.shirt-wall{grid-template-columns:repeat(3,1fr)}}
+.shirt{border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1;background:var(--bg-3);transition:.35s;display:block}
+.shirt img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92);transition:.4s}
+.shirt:hover{border-color:var(--gold);transform:translateY(-4px)}
+.shirt:hover img{filter:saturate(1.1)}
+.btj-line{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.btj-line a{color:var(--ember);text-decoration:none;font-weight:600;border-bottom:1px solid rgba(232,134,45,.4);padding-bottom:2px}
+.btj-line a:hover{border-color:var(--ember)}
+.btj-line .arr{color:var(--faint);font-family:var(--mono);font-size:.8rem}
 
-  .ladder { margin-top: 30px; border-top: 1px solid var(--hair); }
-  .rung { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--hair); }
-  .rung .what { font-size: 1rem; }
-  .rung .what small { display: block; font-family: var(--mono); font-size: .56rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-top: 6px; }
-  .rung .n { font-family: var(--mono); font-size: 1.04rem; color: var(--gold); white-space: nowrap; }
-  .rung.peak { background: linear-gradient(90deg, rgba(201,168,76,.05), transparent 70%); }
-  .rung.peak .n { font-size: 1.42rem; color: var(--gold-lift); }
-  .rung.peak .what { color: #fff; }
-  .ladder-note { margin-top: 18px; }
+/* ---------- try ---------- */
+.try-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:860px){.try-steps{grid-template-columns:1fr}}
+.try{border:1px solid var(--line);border-radius:16px;padding:26px;background:var(--bg-2)}
+.try .t{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:12px}
+.try h3{font-size:1.3rem;margin-bottom:8px}
+.try p{color:var(--dim);font-size:.93rem}
+.try p strong{color:var(--ink)}
 
-  .proof-medal {
-    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px;
-    font-family: var(--mono); font-size: .56rem; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--gold); border: 1px solid var(--hair-lift); padding: 7px 12px;
-  }
+/* ---------- engage ---------- */
+#engage{text-align:center}
+#engage h2{max-width:760px;margin:0 auto 20px}
+#engage .lede{margin:0 auto 40px}
+.footlinks{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:70px;padding-top:36px;border-top:1px solid var(--line)}
+.footlinks a{color:var(--dim);text-decoration:none;font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+.footlinks a:hover{color:var(--gold)}
+.colophon{margin-top:26px;color:var(--faint);font-size:.78rem}
+.colophon img{height:26px;opacity:.75;vertical-align:middle;margin-right:10px}
+.sig{font-family:var(--serif);font-style:italic;color:var(--faint);margin-top:14px;font-size:.9rem}
 
-  .close-card { border: 1px solid var(--hair); background: linear-gradient(160deg, var(--bg-2), var(--bg)); padding: clamp(28px, 6vw, 44px); }
-  .close-card h2 { font-size: clamp(1.45rem, 5vw, 2.05rem); }
-  .cta {
-    display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; padding: 14px 26px;
-    border: 1px solid var(--gold); color: var(--gold); text-decoration: none;
-    font-family: var(--mono); font-size: .64rem; letter-spacing: .2em; text-transform: uppercase;
-    transition: background .3s var(--ease), color .3s var(--ease);
-  }
-  .cta:hover { background: var(--gold); color: var(--bg); }
-  .cta span { transition: transform .3s var(--ease); }
-  .cta:hover span { transform: translateX(4px); }
-
-  footer { border-top: 1px solid var(--hair); padding: 44px 0 64px; margin-top: 10px; }
-  footer .cols { display: flex; flex-wrap: wrap; gap: 26px; justify-content: space-between; align-items: flex-start; }
-  footer .col { font-size: .8rem; color: var(--dim); line-height: 1.75; }
-  footer .col b { display: block; font-family: var(--mono); font-weight: 400; font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 8px; }
-  footer a { color: var(--dim); text-decoration: none; }
-  footer a:hover { color: var(--gold); }
-  footer .sig { margin-top: 30px; font-family: var(--mono); font-size: .56rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal, .stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .cue i { animation: none; }
-    html { scroll-behavior: auto; }
-  }
+/* ---------- reduced motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  #hero::before{animation:none}
+  .scroll-cue{animation:none}
+  .photo img{transition:none}
+}
 </style>
 </head>
 <body>
 
-<div id="rail" aria-hidden="true"><span></span></div>
-<div class="rail-mark" aria-hidden="true">GTO&nbsp;Labs</div>
+<div id="rail" aria-hidden="true"></div>
 
-<header class="mast">
-  <a class="mark" href="https://hub.okinent.org">OKIN&nbsp;Ent.</a>
+<div class="top">
+  <a class="brand" href="#hero">GTO&nbsp;<em>Labs</em></a>
   <nav>
-    <a href="https://bitcoin.okinent.org" class="opt">Bitcoin</a>
-    <a href="#engage">Engage</a>
+    <a href="https://hub.okinent.org">Hub</a>
+    <a href="https://bitcoin.okinent.org">Bitcoin</a>
+    <a href="https://behind-the-jersey.org">Behind the Jersey</a>
+    <a class="cta" href="#assess">Book the assessment</a>
   </nav>
-</header>
-
-<!-- ================= HERO ================= -->
-<div class="hero">
-  <div class="wrap">
-    <div class="hero-inner">
-      <p class="kicker reveal">GTO Labs · Windhoek</p>
-      <h1 class="reveal d1">Golgotha<br><span class="line2">to <em>Olympia</em>.</span></h1>
-      <p class="lede reveal d2">Two places, one city, and the whole distance between them. We put engineers inside your business and <b>ship</b> — then hand you the operation, not a dependency.</p>
-      <div class="cue reveal d3"><i></i> Scroll</div>
-    </div>
-  </div>
 </div>
 
-<!-- ================= 01 ================= -->
-<section>
+<!-- ================= HERO ================= -->
+<section id="hero">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="num reveal">01 — What this is</span>
-      <h2 class="reveal">Not a new company. An umbrella with three arms and a spine.</h2>
+    <div class="kicker reveal">OKIN Ent · Windhoek · Namibia</div>
+    <h1 class="reveal">AI that works <em>where your data lives.</em></h1>
+    <div class="hero-rule reveal"></div>
+    <p class="lede reveal">Your records can't be shipped to someone else's cloud. So we build the intelligence <strong>on machines you can point at</strong> — engineers and agent systems inside your business, hardware in your office, and a private compute factory down the road. <strong>You keep the operation. Not us.</strong></p>
+    <div class="cta-row reveal">
+      <a class="btn ember" href="#assess">Book the assessment</a>
+      <a class="btn ghost" href="#proof">See what we've shipped</a>
     </div>
-    <p class="reveal">GTO Labs is where the AI work lives: <span class="accent">Deployment</span>, <span class="accent">Supply</span>, and <span class="accent">the Lab</span>, over a shared spine of legal, banking, brand, security and credentials.</p>
-    <div class="distance reveal">
-      <div class="places">
-        <div class="place">Golgotha<span>Where we started</span></div>
-        <div class="arrow">&#10230;</div>
-        <div class="place">Olympia<span>Where we are going</span></div>
-      </div>
+    <div class="hero-meta reveal">
+      <div><b>1st</b>AI Hack for Freedom III · DC</div>
+      <div><b>$20,000</b>prize, paid in Bitcoin</div>
+      <div><b>100%</b>on-premise. Data stays home.</div>
     </div>
-    <p class="reveal muted">The name is not a flourish. It is the actual arc — from nothing to somewhere, without pretending the distance is short.</p>
   </div>
+  <div class="scroll-cue">Scroll</div>
 </section>
 
-<!-- ================= 02 ================= -->
-<section>
+<!-- ================= 01 WHO ================= -->
+<section id="who">
   <div class="wrap">
-    <div class="sec-head"><span class="num reveal">02 — The rule that stops it collapsing</span></div>
-    <blockquote class="reveal">Every arm must stand alone. If every arm needs the other two, it is a story, not a structure.</blockquote>
-    <p class="reveal muted">That one line governs everything below it. An arm that cannot survive on its own revenue is a liability dressed as synergy.</p>
-  </div>
-</section>
-
-<!-- ================= 03 ================= -->
-<section>
-  <div class="wide">
-    <div class="sec-head">
-      <span class="num reveal">03 — The arms</span>
-      <h2 class="reveal">Three arms. One spine.</h2>
-    </div>
-    <div class="arms stagger">
-      <div class="arm lead" data-i="01">
-        <p class="tag">Deployment</p>
-        <h3>Forward-deployed engineers</h3>
-        <p>Engineers placed inside client companies, working in the client's real tools from day one — never a demo, never a sandbox. <span class="accent">They report to us, always.</span> The moment an engineer reports into client management it becomes staff augmentation and the margin collapses.</p>
+    <div class="kicker reveal">01 — Who this is for</div>
+    <h2 class="reveal">Built for organisations that <em>can't afford a leak.</em></h2>
+    <p class="lede reveal">If patient files, client records, or contracts crossing a border keeps you up at night — you are the client. Everyone else can rent the cloud. <strong>You shouldn't have to.</strong></p>
+    <div class="grid3">
+      <div class="card reveal">
+        <p class="tag">Medical</p>
+        <h3>Patient data that stays in the practice</h3>
+        <p>Summaries, filing, and records work handled by systems running <strong>inside your walls</strong> — nothing leaves the building, and the auditor can see that.</p>
+        <p class="who">"The filing cabinet got smarter."</p>
       </div>
-      <div class="arm" data-i="02">
-        <p class="tag">Supply</p>
-        <h3>The hardware desk</h3>
-        <p>Spec, source, landed cost, burn-in, provision. The only entirely local arm — no visa, no foreign entity, no contractor law — and it saves money immediately because it is currently done ad hoc.</p>
+      <div class="card reveal">
+        <p class="tag">Legal</p>
+        <h3>Contracts that answer back, Privileged</h3>
+        <p>Your precedents, drafts, and discovery provisioned into a private knowledge base. <strong>Every answer traceable to the document it came from.</strong></p>
+        <p class="who">"Research took a week. Now it takes an afternoon."</p>
       </div>
-      <div class="arm" data-i="03">
-        <p class="tag">The Lab</p>
-        <h3>R&amp;D and the agent fleet</h3>
-        <p>Reference builds, model work, and the agents that do the shipping. This is the part that compounds.</p>
-      </div>
-      <div class="arm" data-i="04">
-        <p class="tag">Spine</p>
-        <h3>Legal, banking, brand, security</h3>
-        <p>Credentials, contracts, banking rails and the knowledge base. Shared — never a bottleneck.</p>
+      <div class="card reveal">
+        <p class="tag">Financial &amp; compliance</p>
+        <h3>Volume work without the volume risk</h3>
+        <p>Regulated data processed on dedicated machines in <strong>your jurisdiction</strong> — with retention, isolation, and deletion stated in writing before we start.</p>
+        <p class="who">"Compliance read the architecture and nodded."</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= 04 ================= -->
-<section>
+<!-- ================= 02 WHAT WE BUILD ================= -->
+<section id="build">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="num reveal">04 — How an engagement runs</span>
-      <h2 class="reveal">M0 to M4 — and why <em>M4</em> is the whole argument.</h2>
-    </div>
-    <div class="loop">
-      <div class="step reveal"><b>M0 · Discovery</b><p>Find the work that actually costs money — not the work they call interesting.</p></div>
-      <div class="step reveal"><b>M1 · Build, in their tools</b><p>A <strong>paid trial build instead of an interview</strong>. Proof, not a pitch deck.</p></div>
-      <div class="step reveal"><b>M2 · Operate alongside them</b><p>Until the thing runs without hand-holding.</p></div>
-      <div class="step reveal"><b>M3 · Hand over</b><p>The operation and a runbook — never the dependency.</p></div>
-      <div class="step reveal"><b>M4 · Extend</b><p>By now we know their business, which is why the second engagement costs them almost nothing to justify.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 05 ================= -->
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num reveal">05 — What it costs</span>
-      <h2 class="reveal">Priced against delivered value. Never against what the engineer costs.</h2>
-    </div>
-    <div class="ladder">
-      <div class="rung reveal"><span class="what">Single agent deployment<small>The floor — never goes below</small></span><span class="n">N$41,000</span></div>
-      <div class="rung reveal"><span class="what">Standard deployment<small>The normal engagement</small></span><span class="n">N$52,500</span></div>
-      <div class="rung peak reveal"><span class="what">Full-scale deployment<small>Multi-agent, production</small></span><span class="n">N$200,000</span></div>
-      <div class="rung reveal"><span class="what">Engineering hours<small>When scoping needs it</small></span><span class="n">N$2,250 / h</span></div>
-      <div class="rung reveal"><span class="what">Recurring<small>Of setup</small></span><span class="n">&asymp; 10%</span></div>
-    </div>
-    <p class="reveal muted ladder-note">The uplift rule keeps it honest: when the flagship re-prices, the whole ladder moves with it. A floor that lags the flagship is how a business quietly starts working for less every year.</p>
-  </div>
-</section>
-
-<!-- ================= 06 ================= -->
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num reveal">06 — Proof, used precisely</span>
-      <h2 class="reveal">First place. And nothing it cannot claim.</h2>
-    </div>
-    <div class="reveal"><span class="proof-medal">&#9670; 1st — AI Hack for Freedom III · Washington DC</span></div>
-    <p class="reveal">Ten teams, six judges, first prize paid on site in Bitcoin. The winning build was <em>Behind the Jersey</em> — a sports-washing data pipeline that had to work to a deadline.</p>
-    <p class="reveal muted">It proves rigour under pressure and pipeline work against a clock. It does <span class="accent">not</span> prove a five-year enterprise track record. Two proofs, two jobs — overselling it dilutes it.</p>
-  </div>
-</section>
-
-
-<!-- ================= 07 ================= -->
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num reveal">07 — What we deploy</span>
-      <h2 class="reveal">AI that works where your data already lives.</h2>
-    </div>
-    <p class="lede reveal">The cloud model bills you per million tokens and asks your records to leave the country. We build the opposite: intelligence that runs on machines you can point at, in your jurisdiction, in the tools you already use.</p>
-    <div class="arms stagger">
-      <div class="arm lead" data-i="01">
-        <p class="tag">On-premise inference</p>
-        <h3>Models on your hardware</h3>
-        <p>Local inference engines on small-form-factor machines — a box in your office, not a region in someone else's cloud. <span class="accent">Your documents never leave the building.</span></p>
+    <div class="kicker reveal">02 — What we build</div>
+    <h2 class="reveal">Three ways to own your intelligence.</h2>
+    <div class="split" style="margin-top:40px">
+      <div>
+        <div class="card reveal" style="margin-bottom:18px">
+          <p class="tag">The team</p>
+          <h3>A private AI team, inside your tools</h3>
+          <p>Forward-deployed engineers and agent systems working in <strong>the software you already run</strong> — from day one, in your building. Read-only until you authorise more. When the system runs itself, we hand it over and leave.</p>
+        </div>
+        <div class="card reveal" style="margin-bottom:18px">
+          <p class="tag">The hardware</p>
+          <h3>Your own AI hardware, in your office</h3>
+          <p>Spec'd, sourced, burnt in, and provisioned by us — <strong>then it's yours.</strong> A machine in your server closet that answers to nobody's terms of service.</p>
+        </div>
+        <div class="card reveal">
+          <p class="tag">The factory</p>
+          <h3>The Token Factory — compute by the month</h3>
+          <p>Not ready for your own hardware? <strong>Rent one of ours.</strong> A dedicated machine in Windhoek for the month — your prompts, records, and renders never share it with anyone. <a href="#factory" style="color:var(--ember)">See it below.</a></p>
+        </div>
       </div>
-      <div class="arm" data-i="02">
-        <p class="tag">Agent fleets</p>
-        <h3>Workers in your real tools</h3>
-        <p>Forward-deployed agents that work inside the software you already run — read-only until you authorise more. Built in your systems, never a demo sandbox.</p>
-      </div>
-      <div class="arm" data-i="03">
-        <p class="tag">Knowledge systems</p>
-        <h3>Documents that answer back</h3>
-        <p>Your contracts, filings, and records provisioned into a private, searchable knowledge base — the difference between storing information and being able to use it.</p>
-      </div>
-      <div class="arm" data-i="04">
-        <p class="tag">The honesty rule</p>
-        <h3>Real, with care, or hype</h3>
-        <p>Every capability we quote is labelled against what the hardware provably holds. <span class="accent">We quote nothing a box cannot carry.</span> If a claim is not proven, it does not go in the proposal.</p>
+      <div class="photo reveal">
+        <img src="assets/sff-pc.jpg" alt="Small-form-factor machine — the class of hardware we deploy">
+        <div class="cap">The class of machine we deploy — small, silent, yours</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= 08 ================= -->
-<section>
+<!-- ================= 03 ASSESSMENT ================= -->
+<section id="assess">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="num reveal">08 — The Token Factory</span>
-      <h2 class="reveal">Rent the box-month. <em>Not the token.</em></h2>
+    <div class="kicker reveal">03 — How it starts</div>
+    <h2 class="reveal">One assessment. <em>Then you know.</em></h2>
+    <div class="panel reveal">
+      <p style="color:var(--dim);max-width:640px">Before anyone quotes you anything, we spend time inside your operation and answer the only question that matters: <strong style="color:var(--ink)">what work is AI actually going to do for you, and what is it worth?</strong> Everything after this is built on the answer.</p>
+      <div class="price-line">
+        <span class="big">N$22,500</span>
+        <span class="once">once · fixed · credited back</span>
+      </div>
+      <div class="gets">
+        <div><b>The audit</b>Where your operation bleeds time and money — found on site, in your real tools.</div>
+        <div><b>The capability matrix</b>Exactly what AI can do for each job, graded honest: real, with care, or hype.</div>
+        <div><b>The quote</b>A fixed buildout price, in writing. Valid for 60 days. No hourly surprises.</div>
+      </div>
+      <div class="mechanic">
+        <p><strong>Take a package and the assessment is credited back in full.</strong> It becomes free — you only ever paid for certainty.</p>
+        <p class="alt">Walk away instead: the audit and matrix are yours to keep, our time was paid for, and nobody owes anybody. That's the whole arrangement.</p>
+      </div>
+      <a class="btn ember" href="https://hub.okinent.org/#/business">Book the assessment</a>
     </div>
-    <p class="lede reveal">Per-token pricing punishes the users who trust the system most. The Token Factory inverts it: you rent a dedicated machine in Windhoek for the month — inference, rendering, and batch jobs run on silicon that serves nobody else. Your prompts, your records, your renders: <span class="accent">they never leave the box.</span></p>
-    <div class="ladder stagger">
-      <div class="rung" data-i="01">
-        <p class="opt">Dedicated box-month</p>
-        <p class="sig">The unit of compute</p>
-        <p class="muted">One machine, one client, the whole month. Token allowances inside are fair-use, metered, and visible to you — the same numbers we see.</p>
-      </div>
-      <div class="rung" data-i="02">
-        <p class="opt">Renders &amp; batch jobs</p>
-        <p class="sig">Priced per job</p>
-        <p class="muted">Image work, redraws, document pipelines — quoted per job with the output defined before the clock starts.</p>
-      </div>
-      <div class="rung" data-i="03">
-        <p class="opt">Capability, stated honestly</p>
-        <p class="sig">The matrix governs</p>
-        <p class="muted">Every model is matched to memory the box actually has. What runs today is quoted today; what needs the next generation of hardware is Phase 2, and we say so.</p>
-      </div>
-    </div>
-    <p class="ladder-note reveal">Measured the way operators measure: time-to-first-token, tokens per second, error rate, tokens per watt-hour. You see the meters; there is nothing to trust on faith.</p>
   </div>
 </section>
 
-<!-- ================= 09 ================= -->
-<section>
+<!-- ================= 04 HOW WORK RUNS ================= -->
+<section id="how">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="num reveal">09 — Try it before you own it</span>
-      <h2 class="reveal">Ninety days on our hardware. Then it is yours — or ours to run.</h2>
+    <div class="kicker reveal">04 — How the work runs</div>
+    <h2 class="reveal">From first call to <em>handover.</em></h2>
+    <div class="steps">
+      <div class="step reveal"><div class="n">1</div><div><h3>Listen</h3><p>We find the work that <strong>actually costs you money every month</strong> — not the work that would look impressive in a demo.</p></div></div>
+      <div class="step reveal"><div class="n">2</div><div><h3>Prove</h3><p>A <strong>paid pilot</strong> built in your real tools, against your real data. You see it working before you commit to anything bigger.</p></div></div>
+      <div class="step reveal"><div class="n">3</div><div><h3>Run</h3><p>We operate it alongside your team until it runs <strong>without hand-holding</strong> — and without us in the room.</p></div></div>
+      <div class="step reveal"><div class="n">4</div><div><h3>Hand over</h3><p>You get the operation and the runbook. <strong>The dependency stays with us; the asset stays with you.</strong></p></div></div>
+      <div class="step reveal"><div class="n">5</div><div><h3>Extend</h3><p>By now we know your business — which is why the second system costs you almost nothing to justify.</p></div></div>
     </div>
-    <p class="lede reveal">For practices that cannot justify hardware up front — medical, legal, anyone whose records cannot leave the country. We host your inference for up to ninety days. A fixed integration fee starts the clock; the token meter is visible to you the entire time.</p>
-    <div class="arms stagger">
-      <div class="arm lead" data-i="01">
-        <p class="tag">Setup</p>
-        <h3>One fixed integration fee</h3>
-        <p>Tooling, data ingestion, hardening — priced up front, in NAD. It funds the work and proves both sides are serious.</p>
+  </div>
+</section>
+
+<!-- ================= 05 COSTS ================= -->
+<section id="costs">
+  <div class="wrap">
+    <div class="kicker reveal">05 — What it costs</div>
+    <h2 class="reveal">Honest brackets. <em>Real quotes after the assessment.</em></h2>
+    <div class="stats">
+      <div class="stat reveal"><b>N$<span class="count" data-to="40">40</span>k<small>+</small></b><span>Paid pilot, from</span></div>
+      <div class="stat reveal"><b>N$50–120k</b><span>Most single-system builds</span></div>
+      <div class="stat reveal"><b>N$<span class="count" data-to="200">200</span>k<small>+</small></b><span>Full-scale production, from</span></div>
+      <div class="stat reveal"><b>≈10%<small>/mo</small></b><span>Ongoing care, of build</span></div>
+    </div>
+    <p class="cost-note reveal"><strong>These are brackets, not quotes.</strong> Your real number comes out of the assessment — priced against what the work saves you, never against what it costs us. And if you take the package, the assessment you already paid comes straight off the bill.</p>
+  </div>
+</section>
+
+<!-- ================= 06 TOKEN FACTORY ================= -->
+<section id="factory">
+  <div class="wrap">
+    <div class="kicker reveal">06 — The Token Factory</div>
+    <h2 class="reveal">Rent the machine. <em>Never share it.</em></h2>
+    <div class="split" style="margin-top:40px">
+      <div class="photo reveal">
+        <img src="assets/mac-studio.jpg" alt="A dedicated compute box — the Token Factory unit">
+        <div class="cap">One box. One client. The whole month.</div>
       </div>
-      <div class="arm" data-i="02">
-        <p class="tag">Trial</p>
-        <h3>90 days, hard stop</h3>
-        <p>Hosted, isolated, supported. At day thirty both sides review honestly — is this working, and where is it going.</p>
-      </div>
-      <div class="arm" data-i="03">
-        <p class="tag">Convert</p>
-        <h3>Your box, or our operation</h3>
-        <p>Buy the machine — spec'd, sourced, and provisioned by the hardware desk. Or keep it running as a managed deployment. <span class="accent">Most clients end up with both.</span></p>
+      <div>
+        <p class="lede reveal" style="margin-bottom:10px">Per-token pricing punishes the customers who use the system most, and the public cloud asks your records to leave the country. The Token Factory inverts both: <strong style="color:var(--ink)">you rent a dedicated machine in Windhoek by the month.</strong></p>
+        <ul class="tf-points reveal">
+          <li><span><b>Your box, your data.</b> Prompts, records, renders — nothing leaves the machine. It runs nothing else for anyone else.</span></li>
+          <li><span><b>Meters you can see.</b> Speed, throughput, uptime — the same dashboards we watch, visible to you the whole time.</span></li>
+          <li><span><b>Renders by the job.</b> Image work, redraws, document pipelines — priced per job, output defined before the clock starts.</span></li>
+          <li><span><b>Honest capability.</b> What runs today is quoted today. What needs next-generation hardware is Phase 2, and we say so.</span></li>
+        </ul>
+        <div class="cta-row reveal"><a class="btn ghost" href="#assess">Start with the assessment</a></div>
       </div>
     </div>
-    <p class="ladder-note reveal">Isolation is decided before the trial, in writing: regulated data gets a box that runs nothing else, with retention and offboarding stated — export in open formats, deletion on written instruction, certificate of deletion. No sub-processors for inference. That is the part cloud cannot say.</p>
+  </div>
+</section>
+
+<!-- ================= 07 PROOF / BTJ ================= -->
+<section id="proof">
+  <div class="wrap">
+    <div class="kicker reveal">07 — Proof, used precisely</div>
+    <h2 class="reveal">First place. <em>And nothing it can't claim.</em></h2>
+    <div class="award reveal">
+      <div class="laurel">❖</div>
+      <div>
+        <h3>1st — AI Hack for Freedom III · Washington DC</h3>
+        <p>Ten teams, six judges, September 2026. First prize — <strong>$20,000, paid on site in Bitcoin.</strong> The winning build was <strong>Behind the Jersey</strong>: a sports-washing data pipeline that had to work to a deadline. It proves rigour under pressure and delivery against a clock. It does not claim a five-year enterprise track record — two proofs, two jobs.</p>
+      </div>
+    </div>
+    <p class="lede reveal" style="margin-bottom:6px"><strong>The winning build didn't stay a demo.</strong> Behind the Jersey runs today — a live data product covering club crests and kits across world football. This is what "shipped, not pitched" looks like:</p>
+    <div class="shirt-wall reveal">
+      <a class="shirt" href="https://behind-the-jersey.org" target="_blank" rel="noopener"><img src="assets/arsenal-2026-27-home-front-square.jpg" alt="Arsenal 2026-27 home shirt — Behind the Jersey data"></a>
+      <a class="shirt" href="https://behind-the-jersey.org" target="_blank" rel="noopener"><img src="assets/real-madrid-2026-27-home-front-square.jpg" alt="Real Madrid 2026-27 home shirt — Behind the Jersey data"></a>
+      <a class="shirt" href="https://behind-the-jersey.org" target="_blank" rel="noopener"><img src="assets/liverpool-2026-27-home-front-square.jpg" alt="Liverpool 2026-27 home shirt — Behind the Jersey data"></a>
+      <a class="shirt" href="https://behind-the-jersey.org" target="_blank" rel="noopener"><img src="assets/bayern-munich-2022-23-home-front-square.jpg" alt="Bayern München 2022-23 home shirt — Behind the Jersey data"></a>
+      <a class="shirt" href="https://behind-the-jersey.org" target="_blank" rel="noopener"><img src="assets/chelsea-2026-27-home-front-square.jpg" alt="Chelsea 2026-27 home shirt — Behind the Jersey data"></a>
+      <a class="shirt" href="https://behind-the-jersey.org" target="_blank" rel="noopener"><img src="assets/newcastle-united-2026-27-home-front-square.jpg" alt="Newcastle United 2026-27 home shirt — Behind the Jersey data"></a>
+    </div>
+    <div class="btj-line reveal">
+      <a href="https://behind-the-jersey.org" target="_blank" rel="noopener">behind-the-jersey.org</a>
+      <span class="arr">— live, in production, built by this team</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 08 TRY ================= -->
+<section id="try">
+  <div class="wrap">
+    <div class="kicker reveal">08 — Try it before you own it</div>
+    <h2 class="reveal">Ninety days on our hardware. <em>Then it's yours — or ours to run.</em></h2>
+    <p class="lede reveal">For practices that can't justify hardware up front. We host your systems for up to ninety days, then you choose — and the assessment fee rides along as credit either way.</p>
+    <div class="try-steps">
+      <div class="try reveal"><p class="t">Setup</p><h3>One fixed fee</h3><p>Integration and hardening, priced up front in NAD. <strong>It proves both sides are serious.</strong></p></div>
+      <div class="try reveal"><p class="t">Trial · 90 days</p><h3>Hosted, supported, hard stop</h3><p>Isolated and supported. <strong>Day 30: an honest review both ways.</strong> Is this working, and where is it going?</p></div>
+      <div class="try reveal"><p class="t">Convert</p><h3>Your box, or our operation</h3><p>Buy the machine — spec'd and provisioned by us — or keep it as a managed deployment. <strong>Most end up with both.</strong></p></div>
+    </div>
   </div>
 </section>
 
 <!-- ================= ENGAGE ================= -->
 <section id="engage">
   <div class="wrap">
-    <div class="close-card reveal">
-      <p class="kicker" style="margin-bottom:16px">Start here</p>
-      <h2>Bring us the job that costs you money every month.</h2>
-      <p class="muted" style="margin-top:14px">M0 is the cheapest way to find out whether this works in your business. Everything after it is triggered by what M0 proves.</p>
-      <a class="cta" href="https://hub.okinent.org/#/assess">Run the AI readiness check <span>&#8594;</span></a>
+    <div class="kicker reveal">09 — Engage</div>
+    <h2 class="reveal">Bring us the job that <em>costs you money every month.</em></h2>
+    <p class="lede reveal">That's where the work starts. The assessment tells us what it's worth to kill it — and you get the answer for the price of a decision.</p>
+    <div class="cta-row reveal" style="justify-content:center">
+      <a class="btn ember" href="https://hub.okinent.org/#/business">Book the assessment — N$22,500, credited back</a>
+      <a class="btn ghost" href="https://hub.okinent.org">Visit the hub</a>
     </div>
+    <div class="footlinks reveal">
+      <a href="https://hub.okinent.org">hub.okinent.org</a>
+      <a href="https://bitcoin.okinent.org">bitcoin.okinent.org</a>
+      <a href="https://behind-the-jersey.org">behind-the-jersey.org</a>
+    </div>
+    <div class="colophon reveal">
+      <img src="assets/okin-logo-gold.png" alt="OKIN Ent"> OKIN Trading Enterprises CC · trading as OKIN Ent. · Windhoek, Namibia
+    </div>
+    <p class="sig reveal">Golgotha to Olympia. — GTO Labs</p>
   </div>
 </section>
 
-<footer>
-  <div class="wide">
-    <div class="cols">
-      <div class="col"><b>GTO Labs</b>An OKIN Ent. arm<br>Windhoek, Namibia</div>
-      <div class="col"><b>Network</b><a href="https://hub.okinent.org">hub.okinent.org</a><br><a href="https://bitcoin.okinent.org">bitcoin.okinent.org</a></div>
-      <div class="col"><b>Method</b>Assess · Deploy<br>Prove · Expand</div>
-    </div>
-    <p class="sig">Golgotha to Olympia</p>
-  </div>
-</footer>
-
 <script>
-/* ==========================================================================
-   LEAF scroll engine — hardened.
-   HARD RULE: content must never depend on a render frame to become visible.
-   rAF and IntersectionObserver both need frames; getBoundingClientRect and
-   timers do not. Three layers:
-     1. immediate pass over in-viewport elements  (no frame needed)
-     2. observer for the progressive reveal       (the nice part)
-     3. safety timer at 1.5s reveals the rest     (the guaranteed part)
-   ========================================================================== */
-(function () {
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var targets = Array.prototype.slice.call(document.querySelectorAll('.reveal, .stagger'));
-
-  function show(el) { el.classList.add('in'); }
-  function inViewport(el) {
-    var r = el.getBoundingClientRect();
-    return r.top < (window.innerHeight || 800) * 0.95 && r.bottom > 0;
-  }
-
-  /* layer 1 — immediate */
-  var pending = [];
-  targets.forEach(function (el) { if (inViewport(el)) show(el); else pending.push(el); });
-
-  if (reduce || !('IntersectionObserver' in window)) {
-    targets.forEach(show); pending = [];
-  } else {
-    try {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (!e.isIntersecting) return;
-          show(e.target); io.unobserve(e.target);
-        });
-      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
-      pending.forEach(function (t) { io.observe(t); });
-    } catch (err) { targets.forEach(show); pending = []; }
-  }
-
-  /* layer 3 — safety net: timers fire where frames do not */
-  setTimeout(function () {
-    pending.forEach(function (el) { if (!el.classList.contains('in')) show(el); });
-  }, 1500);
-
-  /* progress rail, masthead fade, hero parallax, timeline marks — computed */
-  var bar = document.querySelector('#rail span');
-  var mast = document.querySelector('header.mast');
-  var heroInner = document.querySelector('.hero-inner');
-  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
-
-  function frame() {
-    var doc = document.documentElement;
-    var y = window.pageYOffset || doc.scrollTop || 0;
-    var vh = window.innerHeight || 800;
-    var max = (doc.scrollHeight - vh) || 1;
-
-    if (bar) bar.style.height = Math.min(100, Math.max(0, (y / max) * 100)).toFixed(2) + '%';
-    if (mast) mast.style.opacity = y > vh * 0.6 ? '0' : '1';
-    if (heroInner && !reduce && y < vh * 1.2) {
-      heroInner.style.transform = 'translateY(' + (y * 0.14).toFixed(1) + 'px)';
-      heroInner.style.opacity = String(Math.max(0, 1 - y / (vh * 0.85)));
-    }
-    steps.forEach(function (s) {
-      s.classList.toggle('passed', s.getBoundingClientRect().top < vh * 0.62);
-    });
-  }
-  window.addEventListener('scroll', frame, { passive: true });
-  window.addEventListener('resize', frame, { passive: true });
-  frame();
-  setTimeout(frame, 300);
-
-  /* keyboard travel */
-  var KEYS = { j: 1, ArrowDown: 1, k: -1, ArrowUp: -1 };
-  window.addEventListener('keydown', function (e) {
-    var d = KEYS[e.key];
-    if (!d || e.metaKey || e.ctrlKey || e.altKey) return;
-    var stops = document.querySelectorAll('section, .hero');
-    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    var best = null, bestD = Infinity;
-    Array.prototype.forEach.call(stops, function (s) {
-      var t = s.getBoundingClientRect().top + y - 8;
-      var dd = (t - y) * d;
-      if (dd > 8 && dd < bestD) { bestD = dd; best = t; }
-    });
-    if (best === null) return;
-    e.preventDefault();
-    try { window.scrollTo({ top: best, behavior: reduce ? 'auto' : 'smooth' }); }
-    catch (err) { window.scrollTo(0, best); }
-    if (!document.documentElement.scrollTop && !window.pageYOffset) document.documentElement.scrollTop = best;
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = [].slice.call(document.querySelectorAll('.reveal'));
+  var rails = [].slice.call(document.querySelectorAll('section[id]'));
+  var rail = document.getElementById('rail');
+  rails.forEach(function(s){
+    var a = document.createElement('a');
+    a.href = '#'+s.id; a.title = s.id;
+    rail.appendChild(a);
   });
+  var dots = [].slice.call(rail.children);
 
-  document.documentElement.setAttribute('data-leaf', 'ready');
+  function immediate(){
+    var vh = innerHeight;
+    els.forEach(function(el){
+      if (el.getBoundingClientRect().top < vh * .96) el.classList.add('in');
+    });
+  }
+  if ('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el){ io.observe(el); });
+
+    // count-up meters
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        var el = en.target, to = +el.dataset.to, t0 = null;
+        function tick(t){
+          if(!t0) t0 = t;
+          var p = Math.min((t - t0)/1100, 1);
+          el.textContent = Math.round(to * (1 - Math.pow(1-p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        cio.unobserve(el);
+      });
+    }, {threshold:.5});
+    [].slice.call(document.querySelectorAll('.count')).forEach(function(el){ cio.observe(el); });
+
+    // rail highlight
+    var rio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){
+          var id = en.target.id;
+          dots.forEach(function(d,i){ d.classList.toggle('on', rails[i].id === id); });
+        }
+      });
+    }, {threshold:.4});
+    rails.forEach(function(s){ rio.observe(s); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
+  immediate();
+  setTimeout(function(){ els.forEach(function(el){ el.classList.add('in'); }); }, 1500);
+
+  // keyboard travel
+  addEventListener('keydown', function(e){
+    if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    var k = e.key;
+    if (k !== 'j' && k !== 'k' && k !== 'ArrowDown' && k !== 'ArrowUp') return;
+    e.preventDefault();
+    var idx = 0, best = Infinity;
+    rails.forEach(function(s, i){
+      var d = Math.abs(s.getBoundingClientRect().top - 80);
+      if (d < best){ best = d; idx = i; }
+    });
+    var next = (k === 'j' || k === 'ArrowDown') ? Math.min(idx+1, rails.length-1) : Math.max(idx-1, 0);
+    rails[next].scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
+  });
 })();
 </script>
 </body>
