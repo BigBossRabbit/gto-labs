@@ -123,7 +123,7 @@ h2 em{font-style:italic;color:var(--gold)}
 .stat:hover{border-color:rgba(212,175,55,.5)}
 .stat b{display:block;font-family:var(--serif);font-size:clamp(1.5rem,3.4vw,2.2rem);color:var(--gold);font-weight:700;line-height:1.1}
 .stat b small{font-size:.55em;color:var(--dim);font-weight:500}
-.stat span{display:block;margin-top:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.stat > span{display:block;margin-top:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .cost-note{margin-top:26px;color:var(--dim);font-size:.95rem;border-top:1px solid var(--line);padding-top:20px}
 .cost-note strong{color:var(--ink)}
 
@@ -177,6 +177,14 @@ h2 em{font-style:italic;color:var(--gold)}
 .colophon img{height:26px;opacity:.75;vertical-align:middle;margin-right:10px}
 .sig{font-family:var(--serif);font-style:italic;color:var(--faint);margin-top:14px;font-size:.9rem}
 
+
+/* ---------- reading progress (LEAF spec: 2px gold) ---------- */
+#progress{position:fixed;top:0;left:0;right:0;height:2px;background:var(--gold);transform-origin:0 50%;transform:scaleX(0);z-index:80;box-shadow:0 0 8px rgba(212,175,55,.45);pointer-events:none}
+.mail-note{margin-top:16px;color:var(--faint);font-size:.82rem}
+.mail-note a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line-2)}
+.mail-note a:hover{color:var(--gold);border-color:var(--gold)}
+#assess .panel .btn{margin:8px 10px 0 0}
+
 /* ---------- reduced motion ---------- */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -189,6 +197,7 @@ h2 em{font-style:italic;color:var(--gold)}
 </head>
 <body>
 
+<div id="progress" aria-hidden="true"></div>
 <div id="rail" aria-hidden="true"></div>
 
 <div class="top">
@@ -307,7 +316,9 @@ h2 em{font-style:italic;color:var(--gold)}
         <p><strong>Take a package and the assessment is credited back in full.</strong> It becomes free — you only ever paid for certainty.</p>
         <p class="alt">Walk away instead: the audit and matrix are yours to keep, our time was paid for, and nobody owes anybody. That's the whole arrangement.</p>
       </div>
-      <a class="btn ember" href="https://hub.okinent.org/#/business">Book the assessment</a>
+      <a class="btn ember" href="mailto:okin@okinent.org?subject=Book%20the%20assessment%20%E2%80%94%20GTO%20Labs&amp;body=Hi%20OKIN%20Ent%2C%0A%0AI%27d%20like%20to%20book%20the%20N%2422%2C500%20assessment.%0A%0ACompany%3A%0AWhat%20costs%20us%20the%20most%20time%20or%20money%20every%20month%3A%0ABest%20number%20to%20reach%20me%3A%0A%0AThanks%2C%0A">Book the assessment</a>
+      <a class="btn ghost" href="https://hub.okinent.org/#/assess">Free 5-minute readiness check</a>
+      <p class="mail-note">Opens your email with a short note ready to send. No mail app? Write to <a href="mailto:okin@okinent.org">okin@okinent.org</a>.</p>
     </div>
   </div>
 </section>
@@ -415,9 +426,10 @@ h2 em{font-style:italic;color:var(--gold)}
     <h2 class="reveal">Bring us the job that <em>costs you money every month.</em></h2>
     <p class="lede reveal">That's where the work starts. The assessment tells us what it's worth to kill it — and you get the answer for the price of a decision.</p>
     <div class="cta-row reveal" style="justify-content:center">
-      <a class="btn ember" href="https://hub.okinent.org/#/business">Book the assessment — N$22,500, credited back</a>
-      <a class="btn ghost" href="https://hub.okinent.org">Visit the hub</a>
+      <a class="btn ember" href="mailto:okin@okinent.org?subject=Book%20the%20assessment%20%E2%80%94%20GTO%20Labs&amp;body=Hi%20OKIN%20Ent%2C%0A%0AI%27d%20like%20to%20book%20the%20N%2422%2C500%20assessment.%0A%0ACompany%3A%0AWhat%20costs%20us%20the%20most%20time%20or%20money%20every%20month%3A%0ABest%20number%20to%20reach%20me%3A%0A%0AThanks%2C%0A">Book the assessment — N$22,500, credited back</a>
+      <a class="btn ghost" href="https://hub.okinent.org/#/assess">Free readiness check first</a>
     </div>
+    <p class="mail-note" style="text-align:center">Or write to <a href="mailto:okin@okinent.org">okin@okinent.org</a> — a person reads every one.</p>
     <div class="footlinks reveal">
       <a href="https://hub.okinent.org">hub.okinent.org</a>
       <a href="https://bitcoin.okinent.org">bitcoin.okinent.org</a>
@@ -489,6 +501,12 @@ h2 em{font-style:italic;color:var(--gold)}
   }
   immediate();
   setTimeout(function(){ els.forEach(function(el){ el.classList.add('in'); }); }, 1500);
+
+  // reading progress
+  var prog = document.getElementById('progress'), ticking = false;
+  function paint(){ var h = document.documentElement.scrollHeight - innerHeight; prog.style.transform = 'scaleX(' + (h > 0 ? Math.min(scrollY / h, 1) : 0) + ')'; ticking = false; }
+  addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(paint); } }, {passive:true});
+  addEventListener('resize', paint); paint();
 
   // keyboard travel
   addEventListener('keydown', function(e){
